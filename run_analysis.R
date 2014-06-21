@@ -32,7 +32,7 @@ filteredX <- X[,grep("(-mean\\(\\)|-std\\(\\))", features$Name)]
 # Stitch togther the subject column, activity label column, & measurement vector.
 merged <- cbind(subject, Activity = y$Activity, filteredX)
 
-# Group the dataset by subject & activity, aggregating 
+# Group the dataset by subject & activity, using mean for aggregation.
 melted <- melt(merged, id.vars = c("Subject", "Activity"))
 dcasted <- dcast(melted, Subject + Activity ~ variable, mean)
 
