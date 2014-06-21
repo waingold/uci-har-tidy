@@ -1,7 +1,3 @@
-# TODO: write CodeBook.md
-# TODO: write README.md
-# TODO: upload to GitHub
-
 library(reshape2)
 
 # Download the compressed dataset to a temporary location.
@@ -19,8 +15,12 @@ activity_labels <- read.table("activity_labels.txt", col.names = c("ID", "Label"
 features <- read.table("features.txt", col.names = c("Index", "Name"))
 
 # Read & concatenate the observations from the training & test subsets.
-readSet <- function(kind, name, colNames) read.table(sprintf("%s/%s_%s.txt", kind, name, kind), col.names = colNames)
-readMerged <- function(name, colNames) rbind(readSet("test", name, colNames), readSet("train", name, colNames))
+readSet <- function(kind, name, colNames) {
+    read.table(sprintf("%s/%s_%s.txt", kind, name, kind), col.names = colNames, check.names = F)
+}
+readMerged <- function(name, colNames) {
+    rbind(readSet("test", name, colNames), readSet("train", name, colNames))
+}
 subject <- readMerged("subject", "Subject")
 X <- readMerged("X", features$Name)
 y <- readMerged("y", "ActivityID")
